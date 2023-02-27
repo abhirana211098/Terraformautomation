@@ -4,12 +4,12 @@ provider "aws" {
   secret_key="L83bfi3C9MtT4YwXosPrpcpUGlPVOxTjFI6xPGfU"
 }
 
-resource "aws_instance" "terraform_EC2" {
+resource "aws_instance" "terraform" {
   ami           = "ami-0e742cca61fb65051"
   instance_type = "t2.micro"
   vpc_security_group_ids=["${aws_security_group.aws_secure.id}"]
   tags = {
-    Name = "Terraform_Instancee"
+    Name = "Terraform_Instance"
   }
   }
 
