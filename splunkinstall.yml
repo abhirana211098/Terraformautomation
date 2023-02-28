@@ -1,0 +1,48 @@
+---
+ - name: Full Splunk Installation
+   hosts: Splunk_Install
+   tasks:
+
+     - name: Downloading Splunk in EC2-Instance
+       get_url:
+         url: https://download.splunk.com/products/splunk/releases/9.0.2/linux/splunk-9.0.2-17e00c557dc1-Linux-x86_64.tgz
+         dest: /home/ec2-user
+         mode: '0755'
+
+     - name: archive file
+       become: yes
+       become_user: root
+       ansible.builtin.unarchive:
+          src: /home/ec2-user/splunk-9.0.2-17e00c557dc1-Linux-x86_64.tgz
+          dest: /opt
+          remote_src: yes
+
+     - name: start splunk with accept license
+       become: yes
+       become_user: root
+       command:
+         cmd: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd Tata@123
+
+     - name: Setting admin and password for login
+       become: yes
+       become_user: root
+       command:
+         cmd: /opt/splunk/bin/splunk cmd splunkd rest --noauth POST /services/authentication/users "name=admin&password=Tata@123&roles=admin"
+
+     - name: Splunk Restart after setting username and password
+       become: yes
+       become_user: root
+       command:
+         cmd: /opt/splunk/bin/splunk restart
+
+     - name: Splunk boot start
+       become: yes
+       become_user: root
+       command:
+         cmd: /opt/splunk/bin/splunk enable boot-start -user root
+
+     - name: Splunk Restart
+       become: yes
+       become_user: root
+       command:
+         cmd: /opt/splunk/bin/splunk restart
