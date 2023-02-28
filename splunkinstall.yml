@@ -1,6 +1,6 @@
 ---
  - name: Full Splunk Installation
-   hosts: Splunk_Install
+   hosts: Jenkins_Install
    tasks:
 
      - name: Downloading Splunk in EC2-Instance
