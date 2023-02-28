@@ -1,0 +1,1 @@
+Jenkins_Install ansible_host=3.110.154.37 ansible_connection=ssh ansible_user=ec2-user 
